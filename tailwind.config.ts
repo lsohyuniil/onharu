@@ -16,6 +16,8 @@ const config: Config = {
         sub: "#FFE39A",
         border: "#E0E0E0",
         text: "#212121",
+        muted: "#949494",
+        danger: "#EC0C0C",
       },
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],
