@@ -5,6 +5,7 @@ import useModal from "@/hooks/useModal";
 
 export default function PlayGround() {
   const { open, handleOpenModal, handleCloseModal } = useModal();
+
   return (
     <>
       <button onClick={handleOpenModal}>modal open</button>
