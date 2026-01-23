@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RiPokerHeartsFill } from "@remixicon/react";
@@ -16,7 +15,7 @@ interface CardProps {
   href: string;
 }
 
-export const Card: React.FC<CardProps> = ({
+export const Card = ({
   imageUrl,
   category,
   title,
@@ -25,7 +24,7 @@ export const Card: React.FC<CardProps> = ({
   isLiked = false,
   onLikeToggle,
   href,
-}) => {
+}: CardProps) => {
   return (
     <Link
       href={href}
