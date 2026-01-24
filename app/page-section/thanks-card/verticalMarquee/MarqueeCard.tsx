@@ -1,20 +1,11 @@
 import { cn } from "@/lib/utils";
+import { CardItemProps } from "../data/type";
 
-export const MarqueeCard = ({
-  id,
-  storename,
-  contents,
-  date,
-}: {
-  id: string;
-  storename: string;
-  contents: string;
-  date: string;
-}) => {
+export const MarqueeCard = ({ storename, contents, date }: CardItemProps) => {
   return (
     <div
       className={cn(
-        "relative h-full w-full cursor-pointer overflow-hidden rounded-md border p-3 lg:p-7"
+        "relative h-full w-full cursor-pointer overflow-hidden rounded-md border border-gray-300 p-3 lg:p-7"
       )}
     >
       <div className="text-text flex flex-row items-center gap-2">

@@ -1,14 +1,14 @@
-import { Banner } from "./page-section/Banner";
-import { FindStore } from "./page-section/FindStore";
-import { CharityShop } from "./page-section/CharitySopt";
-import { ThanksCard } from "./page-section/ThanksCard";
+import { Banner } from "./page-section/banner/Banner";
+import { FindStore } from "./page-section/find-store/FindStore";
+import { CharityShop } from "./page-section/charity-shop/CharitySopt";
+import { ThanksCard } from "./page-section/thanks-card/ThanksCard";
 
 export default function Home() {
   return (
     <>
-      <Banner></Banner>
-      <FindStore></FindStore>
-      <CharityShop></CharityShop>
+      <Banner />
+      <FindStore />
+      <CharityShop />
       <ThanksCard />
     </>
   );
