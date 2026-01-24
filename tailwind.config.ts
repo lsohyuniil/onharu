@@ -22,9 +22,9 @@ const config: Config = {
         "section-sm-bottom": "3,75rem",
       },
       fontSize: {
-        xs: ["0.875rem", { lineHeight: "1.5" }], // 14
-        sm: ["1rem", { lineHeight: "1.5" }], // 16
-        base: ["1.125rem", { lineHeight: "1.5" }], // 18
+        sm: ["0.875rem", { lineHeight: "1.5" }], // 14
+        base: ["1rem", { lineHeight: "1.5" }], // 16
+        md: ["1.125rem", { lineHeight: "1.5" }], // 18
         lg: ["1.25rem", { lineHeight: "1.5" }], // 20
         xl: ["1.5rem", { lineHeight: "1.5" }], // 24
         "2xl": ["2rem", { lineHeight: "1.5" }], // 32

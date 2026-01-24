@@ -24,7 +24,7 @@ export const Footer = () => {
   return (
     <footer className="border-t border-gray-300 bg-gray-50">
       <div className="wrapper m-auto flex w-full flex-col items-center justify-between gap-4 py-12 md:flex-row md:gap-0">
-        <p className="text-main text-sm font-bold md:text-[18px]">© 2026 온하루 | Team ONHARU</p>
+        <p className="text-main md:text-md text-sm font-bold">© 2026 온하루 | Team ONHARU</p>
 
         <div className="flex items-center gap-5">
           {GithubItems.map(items => (
@@ -35,7 +35,7 @@ export const Footer = () => {
               className="flex items-center gap-1"
             >
               <RiGithubFill />
-              <span className="text-sm font-bold md:text-[18px]">{items.name}</span>
+              <span className="md:text-md text-sm font-bold">{items.name}</span>
             </Link>
           ))}
         </div>
