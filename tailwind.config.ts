@@ -9,6 +9,32 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        wrapper: "1470px",
+      },
+      padding: {
+        wrapper: "15px",
+      },
+      spacing: {
+        "section-lg-top": "6.25rem",
+        "section-lg-bottom": "9.375rem",
+        "section-sm-top": "2.5rem",
+        "section-sm-bottom": "3,75rem",
+      },
+      fontSize: {
+        sm: ["0.875rem", { lineHeight: "1.5" }], // 14
+        base: ["1rem", { lineHeight: "1.5" }], // 16
+        md: ["1.125rem", { lineHeight: "1.5" }], // 18
+        lg: ["1.25rem", { lineHeight: "1.5" }], // 20
+        xl: ["1.5rem", { lineHeight: "1.5" }], // 24
+        "2xl": ["2rem", { lineHeight: "1.5" }], // 32
+        "3xl": ["2.5rem", { lineHeight: "1.5" }], // 40
+      },
+      borderRadius: {
+        sm: "5px",
+        md: "10px",
+        full: "100px",
+      },
       colors: {
         main: "#2B6A5C",
         "main-100": "#E6F1EE",

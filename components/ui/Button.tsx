@@ -11,16 +11,16 @@ interface ButtonProps {
 }
 
 const FontSizeClasses = {
-  sm: "text-[14px]",
-  md: "text-[16px]",
-  lg: "text-[18px]",
+  sm: "text-sm",
+  md: "text-base",
+  lg: "text-md",
 };
 
 const HeightClasses = {
-  xs: "h-[25px] rounded-[5px]",
-  sm: "h-[35px] rounded-[5px]",
-  md: "h-[45px] rounded-[10px]",
-  lg: "h-[50px] rounded-[10px]",
+  xs: "h-[25px] rounded-sm",
+  sm: "h-[35px] rounded-sm",
+  md: "h-[45px] rounded-md",
+  lg: "h-[50px] rounded-md",
 };
 
 const WidthClasses = {

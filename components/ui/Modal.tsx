@@ -7,7 +7,7 @@ interface ModalProps {
 }
 
 const BaseClasses =
-  "-translate-x-[50%] -translate-y-[50%] border border-border fixed top-[50%] left-[50%] z-32 rounded-[12px] bg-white max-w-[calc(100vw-30px)] sm:max-w-[640px] w-full";
+  "-translate-x-[50%] -translate-y-[50%] border border-border fixed top-[50%] left-[50%] z-32 rounded-md bg-white max-w-[calc(100vw-30px)] sm:max-w-[640px] w-full";
 
 export const Modal = ({ children, onClick }: ModalProps) => {
   return (

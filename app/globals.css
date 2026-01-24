@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
+@layer components {
+  .wrapper {
+    @apply max-w-wrapper px-wrapper mx-auto;
+  }
+}
 
 *,
 *::before,
