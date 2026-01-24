@@ -52,7 +52,7 @@ export const Card = ({
   return (
     <Link href={storelink} className="group inline-block h-full">
       <div className="h-full overflow-hidden rounded-md border border-gray-300">
-        <div className="relative h-[183px]">
+        <div className="relative h-[110px] md:h-[183px]">
           <div className="h-full w-full duration-300 ease-in-out group-hover:scale-105">
             <Image
               src={storeSrc || "/image/page/no-image.svg"}
@@ -64,7 +64,7 @@ export const Card = ({
           </div>
           {category}
         </div>
-        <div className="relative bg-white p-4">
+        <div className="relative bg-white p-2.5 md:p-4">
           <div className="absolute top-2 right-5">
             <Like isLiked={false} />
           </div>
@@ -77,7 +77,7 @@ export const Card = ({
             {storeIntroduce}
           </p>
           {(hashtags || reservation) && (
-            <div className="mt-7.5 flex items-center gap-1">
+            <div className="mt-3.5 flex items-center gap-1 md:mt-7.5">
               {hashtags}
               {reservation}
             </div>

@@ -9,7 +9,7 @@ import { CardData } from "./data/data";
 export const CharityShop = () => {
   return (
     <>
-      <section className="mt-section-lg-top">
+      <section className="mt-section-sm-top lg:mt-section-lg-top">
         <div className="wrapper">
           <SectionTitle title="나눔 가게" />
           <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-4">
