@@ -46,7 +46,7 @@ export const Header = () => {
 
   return (
     <header className="bg-white">
-      <div className="m-auto flex w-full max-w-[1470px] items-center justify-between px-[15px]">
+      <div className="wrapper m-auto flex w-full items-center justify-between">
         <div className="flex items-center gap-24">
           <Link href={"/"}>
             <h1 className="bg-main-100 h-[60px] w-[138px]">로고</h1>

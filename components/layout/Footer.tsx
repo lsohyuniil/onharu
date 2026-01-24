@@ -23,7 +23,7 @@ const GithubItems = [
 export const Footer = () => {
   return (
     <footer className="border-t border-gray-300 bg-gray-50">
-      <div className="m-auto flex w-full max-w-[1470px] flex-col items-center justify-between gap-4 px-[15px] py-12 md:flex-row md:gap-0">
+      <div className="wrapper m-auto flex w-full flex-col items-center justify-between gap-4 py-12 md:flex-row md:gap-0">
         <p className="text-main text-sm font-bold md:text-[18px]">© 2026 온하루 | Team ONHARU</p>
 
         <div className="flex items-center gap-5">
