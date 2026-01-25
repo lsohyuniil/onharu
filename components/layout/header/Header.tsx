@@ -3,40 +3,18 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/Button";
+import { Button } from "../../ui/Button";
+import { NavItems } from "./data";
 import clsx from "clsx";
 import { motion, LayoutGroup } from "framer-motion";
 import { RiNotification3Line } from "@remixicon/react";
-
-/* NavItems pathname속성값들은 추후 상세페이지가 만들어진 후 경로 수정해야합니다. */
-
-const NavItems = [
-  {
-    id: 1,
-    pathname: "/playground",
-    title: "나눔가게",
-    requireAuth: false,
-  },
-  {
-    id: 2,
-    pathname: "/playground2",
-    title: "지도",
-    requireAuth: false,
-  },
-  {
-    id: 3,
-    pathname: "",
-    title: "채팅",
-    requireAuth: true,
-  },
-];
 
 export const Header = () => {
   /*
    * const isLoggedIn = !!user
    * 해당 코드는 추후 로그인 여부를 확인하는 코드입니다.
    * 현재는 login 상태를 false로 고정시켜놓은 상태입니다.
-   * login 기능 연결 후 41번째줄은 수정해야합니다.
+   * login 기능 연결 후 20번째줄은 수정해야합니다.
    */
   //
   const isLoggedIn = false;
@@ -68,10 +46,8 @@ export const Header = () => {
                           {items.title}
                         </span>
                         <motion.div
-                          layoutId="nav-underline"
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: isActive ? 1 : 0 }}
-                          whileHover={{ scaleX: 1 }}
                           transition={{ duration: 0.3, ease: "easeInOut" }}
                           style={{ originX: 0.5 }}
                           className="bg-main absolute -bottom-[20px] h-[3px] w-full"
