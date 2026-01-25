@@ -1,6 +1,6 @@
 "use client";
-
 import { Navigation } from "@/components/feature/category/Navigation";
+import { BgrSelect } from "@/components/feature/select/Select";
 import { useCategoryFilter } from "@/components/feature/category/useCategoryFilter";
 import { Card } from "@/components/ui/card/Card";
 import { Category } from "@/components/ui/card/Category";
@@ -29,7 +29,8 @@ export default function CharityStore() {
       <h2 className="sr-only">나눔 가게 전체 보기</h2>
       <div className="wrapper">
         <Navigation value={category} onChange={setCategory} InitializePage={handleFirstPage} />
-        <div className="mt-section-sm-top md:mt-section-lg-top grid grid-cols-4 gap-4">
+        <BgrSelect />
+        <div className="mt-4 grid grid-cols-4 gap-4 md:mt-8">
           {paginatedStores.map(item => (
             <Card
               key={item.id}
