@@ -1,6 +1,6 @@
 "use client";
 import { Navigation } from "@/components/feature/category/Navigation";
-import { BgrSelect } from "@/components/feature/select/Select";
+import { BgrDropdown } from "@/components/feature/dropdown/Dropdown";
 import { useCategoryFilter } from "@/components/feature/category/useCategoryFilter";
 import { Card } from "@/components/ui/card/Card";
 import { Category } from "@/components/ui/card/Category";
