@@ -37,6 +37,11 @@ export default function CharityStore() {
   } = useDropdown({ options: SelectData });
 
   const filterStore = filterByCategory(dummyStores);
+  /**
+   * 현재 filter 로직은 카테고리별 정렬만 구현한 상태입니다.
+   * 추천순, 인기순, 거리순 관련 정보를 어떻게 표현할지 기능 완성 후 고도화시킬 예정
+   * 현재 드롭다운 셀렉트 기능만 구현된 상태
+   * **/
   const paginatedStores = paginate(filterStore, currentPage, 16);
 
   return (
