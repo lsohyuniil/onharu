@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Like } from "@/components/feature/StoreLike";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 export default function Detail() {
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -10,12 +10,9 @@ export default function Detail() {
   const testRef = useRef<HTMLDivElement>(null);
   const maxdragRef = useRef(0);
   const [slidearea, setSlidearea] = useState({ left: 0, right: 0 });
-  const [progressbar, setProgressbar] = useState(0);
   const progressRef = useRef(0);
   const x = useMotionValue(0);
   const smoothX = useSpring(x, { stiffness: 300, damping: 30 });
-  //tab 접근성
-  const [tabX, setTab] = useState(0);
 
   useEffect(() => {
     if (!viewportRef.current || !trackRef.current) return;
@@ -33,19 +30,14 @@ export default function Detail() {
       right: 0,
     });
 
-    setProgressbar(progressInit);
     progressRef.current = progressInit;
   }, []);
 
-  const utilProgressCalc = () => {
-    if (!testRef.current) return;
-
-    const moveX = x.get() / maxdragRef.current;
-
-    //기준값은 항상 progressbar의 초기값 기준으로하기때문에 state가 아닌 ref로 계산
-    const dynamicProgressBar = progressRef.current + (100 - progressRef.current) * -moveX;
-    setProgressbar(dynamicProgressBar);
-  };
+  const progressWidth = useTransform(smoothX, value => {
+    const ratio = -value / maxdragRef.current; // 0 ~ 1
+    const widthPercent = progressRef.current + (100 - progressRef.current) * ratio;
+    return `${widthPercent}%`;
+  });
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!slidearea.left) return;
@@ -56,18 +48,16 @@ export default function Detail() {
       e.preventDefault();
       const nextX = Math.min(x.get() + step, slidearea.right);
       x.set(nextX);
-      utilProgressCalc();
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
       const nextX = Math.max(x.get() - step, slidearea.left);
       x.set(nextX);
-      utilProgressCalc();
     } else if (e.key === "Home") {
       e.preventDefault();
-      setTab(slidearea.right);
+      x.set(0);
     } else if (e.key === "End") {
       e.preventDefault();
-      setTab(slidearea.left);
+      x.set(-maxdragRef.current);
     }
   };
 
@@ -84,13 +74,11 @@ export default function Detail() {
             drag="x"
             tabIndex={0}
             style={{ x: smoothX }}
-            transition={{ type: "tween", duration: 0.4 }}
             onKeyDown={handleKeyDown}
             role="region"
             dragMomentum={false}
             dragConstraints={slidearea}
             dragElastic={0.1}
-            onDrag={utilProgressCalc}
           >
             <div className="flex gap-5" ref={trackRef}>
               <motion.div className="relative h-[340px] w-[calc(25%-15px)] shrink-0">
@@ -142,7 +130,7 @@ export default function Detail() {
           </motion.div>
         </motion.div>
         <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-gray-200">
-          <motion.div className="bg-main-400 h-full" style={{ width: `${progressbar}%` }} />
+          <motion.div className="bg-main-400 h-full" style={{ width: progressWidth }} />
         </div>
       </div>
     </section>
