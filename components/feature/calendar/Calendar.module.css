@@ -39,7 +39,11 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  border-radius: 100%;
+  border-radius: 100% !important;
+}
+/* 다른 month인 경우 구분 */
+.wrapper :global(.react-datepicker__day--outside-month) {
+  color: #d1d5db;
 }
 .wrapper :global(.react-datepicker__day--today) {
   position: relative;
@@ -53,26 +57,29 @@
   font-weight: normal;
 }
 
-/*effect*/
+/*effect - disabled를 제외한 날짜를 hover, focus할 때
+*/
 .wrapper :global(.react-datepicker__day:not([aria-disabled="true"]):hover) {
-  border-radius: 100% !important;
   background-color: #e6f1ee;
 }
 .wrapper :global(.react-datepicker__day:focus-visible) {
   background-color: #e6f1ee !important;
 }
-
+/*effect - disabled를 제외하고 키보드 선택된 날짜는 아무 효과 없음
+hover할 때는 배경 효과 on
+*/
 .wrapper :global(.react-datepicker__day--keyboard-selected:not([aria-disabled="true"]):hover) {
-  border-radius: 100% !important;
   color: rgb(0, 0, 0);
   background-color: #e6f1ee !important;
 }
 .wrapper :global(.react-datepicker__day--keyboard-selected) {
   background-color: transparent !important;
 }
-
+/*effect - 선택된 날짜는 main 컬러로 active효과,
+hover 무시,
+focus 시 글자만 진하게 (background가 연한 컬러)
+*/
 .wrapper :global(.react-datepicker__day--selected) {
-  border-radius: 100% !important;
   background-color: #2b6a5c !important;
   color: #fff !important;
 }
