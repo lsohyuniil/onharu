@@ -14,7 +14,7 @@ export default function DocumentUploadField({ register, errors, watch }: Documen
   return (
     <div className="flex flex-col">
       <label className="text-text mb-1.25 font-medium">
-        증명서류<span className="text-danger">*</span>
+        증명서류<span className="text-danger ml-1">*</span>
       </label>
 
       <input
