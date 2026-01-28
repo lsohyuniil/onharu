@@ -5,7 +5,13 @@ interface PeopleCounter {
   handleSubtract: () => void;
   handleAdd: () => void;
 }
-
+/**
+ * 날짜별로 시간을 그룹핑
+ * @param counter 커스텀 훅에서 전달받고 있으며, 선택된 인원수입니다.
+ * @param availableCounter 예약 가능한 인원수입니다.
+ * @param handleSubtract 커스텀 훅에서 전달받고 있으며, 인원수 감소 함수입니다.
+ * @param handleAdd 커스텀 훅에서 전달받고 있으며, 인원수 증가 함수입니다.
+ */
 export const PeopleCounter = ({
   counter,
   availableCounter,

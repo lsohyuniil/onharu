@@ -16,11 +16,28 @@ import { handleSubmit } from "./utils/ReservationSubmit";
 //dummy data
 import { DummyDate } from "./data/data";
 
+/**
+ * 모든 하위 컴포넌트의 기능은 커스텀 훅으로 작동하고 있습니다.
+ * 조립하는 최상위 컴포넌트 page.tsx에서는 use-* 커스텀 훅으로 예약 관련 기능을 불러와 데이터를 전달합니다.
+ */
 export default function Reservation() {
   const { selectedDate, setSelectedDate } = useCalendarSelect();
   const { selectedTime, handleSelectTime } = useReservationTime({ selectedDate });
   const { counter, handleSubtract, handleAdd } = usePeopleCounter({ availableCounter: 5 });
   const groupedDate = ReservationUtils(DummyDate);
+
+  /**
+ * 날짜별로 시간을 그룹핑
+ * @param groupedDate
+ * 아래와 같은 형태의 데이터로 가공합니다.
+ * 날짜별로 예약가능 시간을 배열로 그룹화 시켜줍니다.
+ * {
+    "2025-12-12": ["11:00", "12:00"],
+    "2025-12-13": ["15:00","17:00"],
+    "2025-12-15": ["14:00"],
+  }
+    캘린더, 예약 시간 선택 컴포넌트에서는 위처럼 그룹화 된 데이터를 전달받습니다.
+ */
 
   return (
     <section className="mt-section-sm-top lg:mt-section-lg-top mb-section-sm-bottom lg:mb-section-lg-bottom">
@@ -63,7 +80,7 @@ export default function Reservation() {
               counter={counter}
               handleSubtract={handleSubtract}
               handleAdd={handleAdd}
-              availableCounter={availableCounter}
+              availableCounter={5}
             />
           </div>
         </div>
