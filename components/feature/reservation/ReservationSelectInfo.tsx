@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { FormatKoreanDate } from "./utils/FormatKoreanDate";
 
 interface ReservationSelectInfoProps {
   selectedTime: string | null;
@@ -9,18 +10,28 @@ export const ReservationSelectInfo = ({
   selectedTime,
   selectedDate,
 }: ReservationSelectInfoProps) => {
-  return (
-    <div className="md:text-md w-full rounded-md border border-gray-300 py-3.5 text-center text-sm font-semibold md:py-5.5">
-      {selectedDate && selectedTime && (
-        <p>
+  const baseClasses = "rounded-md border border-gray-300 py-3 text-center md:py-5";
+  if (selectedDate && selectedTime) {
+    const formatDate = format(selectedDate, "yyyy-MM-dd");
+    const koDate = FormatKoreanDate(formatDate);
+
+    return (
+      <div className={baseClasses}>
+        <p className="md:text-md text-sm font-semibold">
           선택된 일정 :{" "}
           <span className="text-main">
-            {format(selectedDate, "yyyy-MM-dd")} {selectedTime}
+            {koDate} {selectedTime}
           </span>
         </p>
-      )}
+      </div>
+    );
+  }
 
-      {(!selectedDate || !selectedTime) && <p>선택된 일정이 없습니다.</p>}
-    </div>
-  );
+  if (!selectedDate || !selectedTime) {
+    return (
+      <div className={baseClasses}>
+        <p className="md:text-md text-sm font-semibold">선택된 일정이 없습니다.</p>
+      </div>
+    );
+  }
 };
