@@ -6,13 +6,24 @@ import { DevideBar } from "./components/DevideBar";
 import { ReservationCalendar } from "./components/ReservationCalendar";
 import { useCalendarSelect } from "@/components/feature/calendar/useCalendarSelect";
 import { ReservationSelectInfo } from "./components/ReservationSelectInfo";
+import { ReservationTime } from "./components/ReservationTime";
 import { PeopleCounter } from "./components/PeopleCounter";
 import { usePeopleCounter } from "./hooks/usePeopleCounter";
 import { Button } from "@/components/ui/Button";
+import { ReservationUtils } from "@/components/feature/calendar/utils/reservationUtils";
+
+//dummy data
+import { DummyDate } from "./data/data";
 
 export default function Reservation() {
   const { selectedDate, setSelectedDate } = useCalendarSelect();
   const { counter, handleSubtract, handleAdd } = usePeopleCounter({ availableCounter: 5 });
+  /**
+   * 날짜별로 시간을 그룹핑
+   * @param availableDates 예약 가능한 {날짜:시간[]} 배열에서 날짜만 뽑아 캘린더 컴포넌트로 전달
+   */
+  const groupedDate = ReservationUtils(DummyDate);
+  const availableDates: Date[] = Object.keys(groupedDate).map(dateStr => new Date(dateStr));
 
   return (
     <section className="mt-section-sm-top lg:mt-section-lg-top mb-section-sm-bottom lg:mb-section-lg-bottom">
@@ -29,10 +40,14 @@ export default function Reservation() {
         <div>
           <Heading title="날짜와 시간을 선택해 주세요." />
           <div className="mt-9">
-            <ReservationCalendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+            <ReservationCalendar
+              availableDate={availableDates}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
           </div>
           <div className="mt-6">
-            <p>오전</p>
+            <ReservationTime availableGroup={groupedDate} selectedDate={selectedDate} />
           </div>
           <div className="mt-12.5">
             <ReservationSelectInfo selectedDate={selectedDate} />

@@ -5,13 +5,17 @@ import Calendar from "@/components/feature/calendar/Calendar";
 import { Dispatch, SetStateAction } from "react";
 
 interface ReservationCalendar {
+  availableDate: Date[];
   selectedDate: Date | null;
   setSelectedDate: Dispatch<SetStateAction<Date | null>>;
 }
 
-export const ReservationCalendar = ({ selectedDate, setSelectedDate }: ReservationCalendar) => {
-  const availableDates = ["2026-02-01", "2026-02-05", "2026-02-12"];
-  const filterDate = (d: Date) => availableDates.some(ad => isSameDay(d, parseISO(ad)));
+export const ReservationCalendar = ({
+  availableDate,
+  selectedDate,
+  setSelectedDate,
+}: ReservationCalendar) => {
+  const filterDate = (d: Date) => availableDate.some(ad => isSameDay(d, ad));
 
   return (
     <Calendar
