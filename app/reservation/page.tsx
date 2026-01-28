@@ -63,6 +63,7 @@ export default function Reservation() {
               counter={counter}
               handleSubtract={handleSubtract}
               handleAdd={handleAdd}
+              availableCounter={availableCounter}
             />
           </div>
         </div>
