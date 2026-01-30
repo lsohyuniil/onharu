@@ -35,7 +35,7 @@ export default function Sidebar({ role }: { role: "owner" | "child" }) {
     <div className="sticky top-0 z-50 w-full border-b bg-white lg:w-115 lg:border-b-0 lg:bg-transparent">
       {/* 모바일 헤더 */}
       <div className="flex items-center justify-between p-4 lg:hidden">
-        <h2 className="text-xl font-bold">마이페이지</h2>
+        <h2 className="text-base font-bold sm:text-xl">마이페이지</h2>
         <button onClick={() => setMobileMenuOpen(prev => !prev)}>
           {mobileMenuOpen ? <RiCloseLine size={24} /> : <RiMenuLine size={24} />}
         </button>
@@ -47,7 +47,7 @@ export default function Sidebar({ role }: { role: "owner" | "child" }) {
         className={clsx(
           "transition-max-height overflow-hidden duration-300 ease-in-out lg:block",
           mobileMenuOpen ? "max-h-500" : "max-h-0",
-          "lg:max-h-full lg:p-6"
+          "lg:max-h-full lg:min-w-70 lg:p-6"
         )}
       >
         {/* PC 헤더 */}

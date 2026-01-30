@@ -5,13 +5,12 @@ import OwnerReservationCard from "./OwnerReservationCard";
 import UserProfileCard from "./UserProfileCard";
 import { ownerActive } from "../data/mockData";
 
-
 export function OwnerMyPage({ user }: { user: User & { role: "owner" } }) {
   const { hasStore, shareCount, reservations } = ownerActive;
 
   return (
-    <div className="flex flex-col gap-7.5">
-      <div className="flex gap-7.5">
+    <div className="flex flex-col gap-3 lg:gap-7.5">
+      <div className="flex flex-col gap-3 md:flex-row lg:gap-7.5">
         <UserProfileCard user={user} />
 
         {!hasStore ? (

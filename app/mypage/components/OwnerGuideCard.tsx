@@ -15,16 +15,16 @@ export default function OwnerGuideCard({ description, subDescription, buttonText
   const router = useRouter();
 
   return (
-    <div className="bg-secondary flex-1 rounded-[10px] p-7">
-      <div className="flex items-center gap-6">
+    <div className="bg-secondary flex-1 rounded-[10px] p-5 sm:p-7">
+      <div className="flex items-center gap-3 sm:gap-6">
         <div className="flex flex-col items-center text-center">
           <BadgeLevel level="비기너" />
         </div>
 
-        <div className="mt-8 flex flex-col gap-16 font-medium">
+        <div className="mt-4 flex flex-col gap-4 font-medium break-keep sm:mt-8 sm:gap-16">
           <div>
             <p>{description}</p>
-            <p className="text-base">{subDescription}</p>
+            <p className="text-xs sm:text-base">{subDescription}</p>
           </div>
 
           <Button

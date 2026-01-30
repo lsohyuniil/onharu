@@ -10,8 +10,8 @@ export default function ChildVisitScheduleCard({ schedule }: { schedule?: ChildS
 
   if (!schedule) {
     return (
-      <div className="bg-secondary flex flex-1 flex-col justify-between rounded-[10px] p-7">
-        <div className="text-lg font-bold">
+      <div className="bg-secondary flex flex-1 flex-col justify-between gap-4 rounded-[10px] p-5 md:min-w-87.5 lg:p-7">
+        <div className="text-sm font-bold sm:text-lg">
           <p>방문 예정인 곳이 없어요!</p>
           <p>찾으러 가볼까요?</p>
         </div>
@@ -34,14 +34,14 @@ export default function ChildVisitScheduleCard({ schedule }: { schedule?: ChildS
   return (
     <div
       onClick={() => router.push(`/charitystore/${schedule.storeId}`)}
-      className="bg-secondary flex flex-1 cursor-pointer flex-col justify-between rounded-[10px] p-7"
+      className="bg-secondary flex flex-1 cursor-pointer flex-col justify-between rounded-[10px] p-5 md:min-w-87.5 lg:p-7"
     >
-      <div className="flex items-center justify-between text-lg font-bold">
+      <div className="flex items-center justify-between text-base font-bold sm:text-lg">
         방문 예정
-        <RiArrowRightSLine size={30} className="text-text-secondary" />
+        <RiArrowRightSLine className="text-text-secondary h-5 w-5 sm:h-7.5 sm:w-7.5" />
       </div>
 
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2.5 text-xs break-keep sm:text-base">
         <p>{schedule.storeName}</p>
         <p className="text-text-secondary">{schedule.address}</p>
         <p>
