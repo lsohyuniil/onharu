@@ -4,10 +4,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Input from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
 import AccountEditForm, { EditForm, UserRole } from "./AccountEditForm";
 import useModal from "@/hooks/useModal";
-import { Modal } from "@/components/ui/Modal";
+import FormPageLayout from "../../components/FormPageLayout";
 
 interface PasswordConfirmForm {
   password: string;
@@ -79,83 +78,56 @@ export default function EditAccountFlow() {
   };
 
   return (
-    <div className="mx-auto flex max-w-md flex-col gap-6">
+    <div>
       {/* 비밀번호 확인 */}
       {step === "confirm" && (
         <>
-          <div className="sm:text-md text-center text-sm font-medium">
-            <p>회원정보를 안전하게 보호하기 위해</p>
-            <p>비밀번호를 한 번 더 입력해주세요.</p>
-          </div>
-
-          <Input label="이메일" id="email" placeholder="test@test.com" disabled />
-
-          <Input
-            label="비밀번호"
-            id="password"
-            type="password"
-            placeholder="비밀번호를 입력해 주세요."
-            isRequired
-            register={register("password", { required: "비밀번호는 필수입니다." })}
-            error={
-              errors.password ||
-              (serverError ? { type: "server", message: serverError } : undefined)
+          <FormPageLayout
+            title={
+              <>
+                <p>회원정보를 안전하게 보호하기 위해</p>
+                <p>비밀번호를 한 번 더 입력해주세요.</p>
+              </>
             }
-          />
+            onCancel={() => router.push("/mypage")}
+            onSubmit={handleSubmit(onSubmitPassword)}
+            modalOpen={false}
+            modalMessage=""
+            onModalConfirm={() => {}}
+          >
+            <Input label="이메일" id="email" placeholder="test@test.com" disabled />
 
-          <div className="grid grid-cols-2 gap-2 sm:gap-5">
-            <Button
-              onClick={() => router.push("/mypage")}
-              varient="light"
-              fontSize="md"
-              width="lg"
-              height="md"
-            >
-              취소
-            </Button>
-
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmitPassword)}
-              varient="default"
-              fontSize="md"
-              width="lg"
-              height="md"
-            >
-              확인
-            </Button>
-          </div>
+            <Input
+              label="비밀번호"
+              id="password"
+              type="password"
+              placeholder="비밀번호를 입력해 주세요."
+              isRequired
+              register={register("password", { required: "비밀번호는 필수입니다." })}
+              error={
+                errors.password ||
+                (serverError ? { type: "server", message: serverError } : undefined)
+              }
+            />
+          </FormPageLayout>
         </>
       )}
-
-      {/* 회원정보 수정 */}
       {step === "edit" && editData && (
-        <AccountEditForm
-          defaultValues={editData}
-          userRole={userRole}
-          onSubmit={onSubmitEdit}
-          serverNicknameError={nicknameError}
-        />
-      )}
-
-      {/* 수정 완료 모달 */}
-      {open && (
-        <Modal onClick={handleModalConfirm}>
-          <div className="flex flex-col items-center gap-2 sm:gap-4">
-            <p className="mb-5 text-center font-medium break-keep sm:mb-10 sm:text-lg">
-              회원정보가 성공적으로 수정되었습니다.
-            </p>
-            <Button
-              varient="default"
-              width="lg"
-              height="md"
-              fontSize="sm"
-              onClick={handleModalConfirm}
-            >
-              확인
-            </Button>
-          </div>
-        </Modal>
+        <FormPageLayout
+          modalOpen={open}
+          modalMessage="회원정보가 성공적으로 수정되었습니다."
+          onModalConfirm={handleModalConfirm}
+          showActions={false}
+        >
+          {editData && (
+            <AccountEditForm
+              defaultValues={editData}
+              userRole={userRole}
+              onSubmit={onSubmitEdit}
+              serverNicknameError={nicknameError}
+            />
+          )}
+        </FormPageLayout>
       )}
     </div>
   );

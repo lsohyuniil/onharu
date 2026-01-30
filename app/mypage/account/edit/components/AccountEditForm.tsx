@@ -51,6 +51,7 @@ export default function AccountEditForm({
           placeholder="이름을 입력해 주세요."
           register={register("name", { required: "이름은 필수입니다." })}
           error={errors.name as FieldError | undefined}
+          isRequired
         />
 
         {userRole === "child" && (
@@ -63,6 +64,7 @@ export default function AccountEditForm({
               minLength: { value: 2, message: "닉네임은 2자 이상 입력해 주세요." },
             })}
             error={errors.nickname as FieldError | undefined}
+            isRequired
           />
         )}
 
@@ -78,6 +80,7 @@ export default function AccountEditForm({
             },
           })}
           error={errors.phone as FieldError | undefined}
+          isRequired
         />
 
         {userRole === "owner" && (
