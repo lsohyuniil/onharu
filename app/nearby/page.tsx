@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { SideMenu } from "./component/SideMenu";
 import { Map } from "@/components/feature/map/map";
 import { Navigation } from "@/components/feature/category/Navigation";
@@ -7,7 +8,11 @@ import { useMyLocation } from "@/components/feature/map/hooks/useMyLocation";
 import { useCategoryFilter } from "@/components/feature/category/useCategoryFilter";
 import { useFilterStore } from "@/components/feature/map/hooks/useFilterStore";
 import { DummyData } from "./data/DummyData";
-import { useEffect, useState } from "react";
+import { MyAddress } from "./component/MyAddress";
+import { Card } from "@/components/ui/card/Card";
+import { StoreAddress } from "@/components/ui/card/StoreAddress";
+import { Button } from "@/components/ui/Button";
+import { LocationSearch } from "./component/LocationSearch";
 import { NearbyStore } from "./type/type";
 
 export default function Nearby() {
@@ -25,7 +30,27 @@ export default function Nearby() {
     <section>
       <h2 className="sr-only">내 주변 착한가게를 찾을 수 있습니다.</h2>
       <div className="flex h-[100vh]">
-        <SideMenu store={stores} mylocation={mylocation} />
+        <SideMenu>
+          <MyAddress mylocation={mylocation} />
+          <LocationSearch stores={stores} setStores={setStores} />
+          <div className="grid grid-cols-1 gap-7.5">
+            {stores.map(store => (
+              <Card
+                key={store.id}
+                storelink="/"
+                storeSrc=""
+                storename={store.name}
+                storeAddress={<StoreAddress address={store.address} />}
+                storeIntroduce={store.description}
+                reservation={
+                  <Button varient="default" width="lg" height="md" fontSize="md">
+                    예약하기
+                  </Button>
+                }
+              ></Card>
+            ))}
+          </div>
+        </SideMenu>
         <div className="relative flex-1">
           <div className="absolute top-5 left-[50%] z-50 w-full -translate-x-[50%]">
             <Navigation value={category} onChange={setCategory} InitializePage={() => {}} />

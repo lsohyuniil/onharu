@@ -29,6 +29,7 @@ export const Map = (props: MapProps) => {
   const { type, address, category } = props;
   const mapRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<kakao.maps.Map | null>(null);
+  const markersRef = useRef<kakao.maps.Marker[]>([]);
   const [mapReady, setMapReady] = useState<boolean>(false);
   const stores = type === "search" ? props.store : null;
 
@@ -49,7 +50,7 @@ export const Map = (props: MapProps) => {
         moveToCurrentLocation(map, latitude, longitude); //map center 순서보장을 위해
         props.handleMyLocation(latitude, longitude);
 
-        NearbyStoreMarker(map, props.store);
+        NearbyStoreMarker(map, props.store, markersRef);
       }
 
       //searchNearbyStores(map, '동물병원')
@@ -73,7 +74,7 @@ export const Map = (props: MapProps) => {
     if (!locationRef.current) return;
     if (!props.store?.length) return;
 
-    NearbyStoreMarker(locationRef.current, props.store);
+    NearbyStoreMarker(locationRef.current, stores, markersRef);
   }, [type, stores]);
 
   return <div className="h-full w-full" ref={mapRef} />;

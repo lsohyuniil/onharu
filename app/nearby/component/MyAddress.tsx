@@ -1,0 +1,26 @@
+import { useState, useEffect } from "react";
+import { getAddress } from "@/components/feature/map/getAddress";
+import { Button } from "@/components/ui/Button";
+
+export const MyAddress = ({ mylocation }: { mylocation: { lat: number; lng: number } }) => {
+  const [myaddress, setMyAddress] = useState("");
+
+  useEffect(() => {
+    const loadAddress = async () => {
+      const loadAddress = await getAddress({ mylocation });
+
+      setMyAddress(loadAddress);
+    };
+
+    loadAddress();
+  }, [mylocation]);
+
+  return (
+    <div className="text-md flex items-center justify-between font-bold md:text-xl">
+      {myaddress}
+      <Button varient="default" fontSize="sm" width="xs" height="xs">
+        위치 변경
+      </Button>
+    </div>
+  );
+};

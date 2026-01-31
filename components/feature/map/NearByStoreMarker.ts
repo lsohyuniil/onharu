@@ -1,30 +1,27 @@
 import { NearbyStore } from "@/app/nearby/type/type";
 import { MarkerCustom } from "./markerCustom";
 
-export function NearbyStoreMarker(map: kakao.maps.Map, stores: NearbyStore[]) {
-  const markers: kakao.maps.Marker[] = [];
-
+export function NearbyStoreMarker(
+  map: kakao.maps.Map,
+  stores: NearbyStore[] | null,
+  markersRef: React.MutableRefObject<kakao.maps.Marker[]>
+) {
   if (!stores) return;
+
+  markersRef.current.forEach(marker => marker.setMap(null));
+  markersRef.current = [];
 
   stores.forEach(store => {
     const position = new kakao.maps.LatLng(store.lat, store.lng);
 
     const CustomMarkers = MarkerCustom(store.category);
-
     const marker = new kakao.maps.Marker({
       map,
       position,
-      title: store.name,
       image: CustomMarkers,
+      title: store.name,
     });
 
-    kakao.maps.event.addListener(marker, "click", () => {
-      // 클릭 시 처리 (선택/팝업 등)
-      console.log("clicked", store.name);
-    });
-
-    markers.push(marker);
+    markersRef.current.push(marker);
   });
-
-  return markers;
 }
