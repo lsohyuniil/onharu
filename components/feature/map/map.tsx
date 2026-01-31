@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { MapLoading } from "./MapLoading";
 import { InitMap } from "./initMap";
 import { getCurrentPosition } from "./getCurrentPositin";
 import { moveToCurrentLocation } from "./moveCurrentLocation";
@@ -51,10 +52,8 @@ export const Map = (props: MapProps) => {
         props.handleMyLocation(latitude, longitude);
 
         NearbyStoreMarker(map, props.store, markersRef);
+        setMapReady(true);
       }
-
-      //searchNearbyStores(map, '동물병원')
-      setMapReady(true);
     };
 
     mapload();
@@ -77,5 +76,10 @@ export const Map = (props: MapProps) => {
     NearbyStoreMarker(locationRef.current, stores, markersRef);
   }, [type, stores]);
 
-  return <div className="h-full w-full" ref={mapRef} />;
+  return (
+    <>
+      <div className="h-full w-full" ref={mapRef} />
+      {type === "search" && <MapLoading ready={mapReady} />}
+    </>
+  );
 };
