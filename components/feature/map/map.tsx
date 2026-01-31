@@ -69,8 +69,6 @@ export const Map = (props: MapProps) => {
   }, []);
 
   useEffect(() => {
-    console.log(stores);
-
     if (type !== "search") return;
     if (!locationRef.current) return;
     if (!props.store?.length) return;

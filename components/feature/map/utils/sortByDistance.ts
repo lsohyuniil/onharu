@@ -1,7 +1,7 @@
 import { getDistance } from "./getDistance";
-import { NerabyStore } from "@/app/nearby/type/type";
+import { NearbyStore } from "@/app/nearby/type/type";
 
-export const sortByDistance = (myLat: number, myLng: number, stores: NerabyStore[]) => {
+export const sortByDistance = (myLat: number, myLng: number, stores: NearbyStore[]) => {
   return [...stores].sort((a, b) => {
     const distA = getDistance(myLat, myLng, a.lat, a.lng);
     const distB = getDistance(myLat, myLng, b.lat, b.lng);
