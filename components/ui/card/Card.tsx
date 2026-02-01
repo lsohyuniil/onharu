@@ -49,12 +49,13 @@ export const Card = ({
   reservation,
 }: CardProps) => {
   return (
-    <Link href={storelink} className="group inline-block h-full">
+    <Link
+      href={storelink}
+      className="inline-block h-full duration-300 ease-in-out hover:-translate-y-1.5"
+    >
       <div className="h-full overflow-hidden rounded-md border border-gray-300">
         <div className="relative h-[110px] md:h-[183px]">
-          <div className="h-full w-full duration-300 ease-in-out group-hover:scale-105">
-            {storeThumnail}
-          </div>
+          <div className="h-full w-full">{storeThumnail}</div>
           {category}
         </div>
         <div className="relative bg-white p-2.5 md:p-4">

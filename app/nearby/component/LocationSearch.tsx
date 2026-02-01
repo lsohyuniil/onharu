@@ -77,14 +77,14 @@ export const LocationSearch = ({
       )}
       {!coordopen && address && (
         <>
-          <p className="mt-8 text-center text-sm font-semibold md:text-base">
+          <p className="md:text-md mt-8 text-center text-base font-semibold">
             선택한 주소 : {address}
           </p>
         </>
       )}
       <div className="mt-14.5">
         <Button varient="default" fontSize="md" width="lg" height="lg" onClick={handleFindLocation}>
-          위치찾기
+          위치 변경
         </Button>
       </div>
     </>

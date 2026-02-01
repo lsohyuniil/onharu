@@ -1,30 +1,34 @@
 "use client";
-
 import { useEffect, useState, useMemo } from "react";
-import { SideMenu } from "./component/SideMenu";
+import {
+  DevideBar,
+  LocationSearch,
+  MyAddress,
+  SideMenu,
+  StoreSearch,
+  StoreSearchSkeleton,
+} from "./component";
+import { DummyData } from "./data/DummyData";
+import { NearbyStore } from "./type/type";
+
 import { Map } from "@/components/feature/map/map";
 import { Navigation } from "@/components/feature/category/Navigation";
 import { useMyLocation } from "@/components/feature/map/hooks/useMyLocation";
 import { useCategoryFilter } from "@/components/feature/category/useCategoryFilter";
 import { useSearch } from "@/components/feature/map/hooks/useSearch";
-import { MyAddress } from "./component/MyAddress";
+import { getCurrentPosition } from "@/components/feature/map/getCurrentPositin";
+
 import { Card } from "@/components/ui/card/Card";
+import { CardSkeleton } from "@/components/ui/card/CardSkeleton";
 import { OperatingBedge } from "@/components/ui/card/OperatingBedge";
 import { Thumbnail } from "@/components/ui/card/Thumbnail";
 import { StoreAddress } from "@/components/ui/card/StoreAddress";
 import { searchStores } from "@/components/feature/map/searchStore";
 import { Button } from "@/components/ui/Button";
-import { DevideBar } from "./component/DevideBar";
-import { StoreSearch } from "./component/StoreSearch";
-import { DummyData } from "./data/DummyData";
-import { NearbyStore } from "./type/type";
-import { CardSkeleton } from "@/components/ui/card/CardSkeleton";
-import { StoreSearchSkeleton } from "./component/StoreSearchSkeleton";
+
 import { Modal } from "@/components/ui/Modal";
 import useModal from "@/hooks/useModal";
-import { LocationSearch } from "./component/LocationSearch";
 import { cn } from "@/lib/utils";
-import { getCurrentPosition } from "@/components/feature/map/getCurrentPositin";
 
 export default function Nearby() {
   const [allStores, setAllStores] = useState<NearbyStore[]>([]);
@@ -87,6 +91,10 @@ export default function Nearby() {
     setInputValue("");
   };
 
+  const handleReservation = (e: MouseEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <section>
       <h2 className="sr-only">내 주변 착한가게를 찾을 수 있습니다.</h2>
@@ -122,8 +130,15 @@ export default function Nearby() {
                     <OperatingBedge openTime={store.openTime} closeTime={store.closeTime} />
                   }
                   reservation={
-                    <Button varient="default" width="lg" height="md" fontSize="md">
-                      나눔 예약하기
+                    <Button
+                      varient="default"
+                      width="lg"
+                      height="md"
+                      fontSize="md"
+                      disabled={!store.hasSharing}
+                      onClick={handleReservation}
+                    >
+                      {store.hasSharing ? "나눔 예약하기" : "나눔 준비중"}
                     </Button>
                   }
                 />

@@ -2,7 +2,6 @@
 import { useRef, useEffect, useState } from "react";
 import { MapLoading } from "./MapLoading";
 import { InitMap } from "./initMap";
-import { getCurrentPosition } from "./getCurrentPositin";
 import { moveToCurrentLocation } from "./moveCurrentLocation";
 import { getStorePosition } from "./getStorePosition";
 import { CategoryName } from "../category/data";
