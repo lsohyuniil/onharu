@@ -27,12 +27,16 @@ export const Card = (props: CardProps) => {
     <Link
       href={props.storelink}
       id={props.storeId}
-      className={"inline-block h-full duration-300 ease-in-out hover:-translate-y-1.5"}
+      className={cn(
+        "inline-block h-full duration-300 ease-in-out hover:-translate-y-1.5",
+        props.type === "nearby" && "h-fit"
+      )}
     >
       <div
         className={cn(
           "h-full overflow-hidden rounded-md border border-gray-300",
-          activeId === props.storeId && "outline-main-400 outline outline-2"
+          activeId === props.storeId && "outline-main-400 outline outline-2",
+          props.type === "nearby" && "h-fit"
         )}
       >
         <div className="relative h-[110px] md:h-[183px]">
