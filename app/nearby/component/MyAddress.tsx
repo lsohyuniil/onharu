@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/Button";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-export const MyAddress = ({ mylocation }: { mylocation: { lat: number; lng: number } }) => {
+interface MyAddressProps {
+  mylocation: { lat: number; lng: number };
+  handleOpenModal: () => void;
+}
+
+export const MyAddress = ({ mylocation, handleOpenModal }: MyAddressProps) => {
   const [myaddress, setMyAddress] = useState("");
 
   useEffect(() => {
@@ -26,16 +31,14 @@ export const MyAddress = ({ mylocation }: { mylocation: { lat: number; lng: numb
   }
   if (myaddress !== "") {
     return (
-      <div className="text-md flex items-center justify-between px-7 pt-12.5 font-bold md:text-xl">
-        {myaddress !== "" && (
-          <>
-            {myaddress}
-            <Button varient="default" fontSize="sm" width="xs" height="xs">
-              위치 변경
-            </Button>
-          </>
-        )}
-      </div>
+      <>
+        <div className="text-md flex items-center justify-between px-7 pt-12.5 font-bold md:text-xl">
+          {myaddress}
+          <Button varient="default" fontSize="sm" width="xs" height="xs" onClick={handleOpenModal}>
+            위치 변경
+          </Button>
+        </div>
+      </>
     );
   }
 };

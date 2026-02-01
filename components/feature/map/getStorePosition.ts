@@ -17,7 +17,6 @@ export async function getStorePosition(
     if (!address || !category) return;
     geocoder.addressSearch(address, (results, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        console.log(results);
         const center = new kakao.maps.LatLng(Number(results[0].y), Number(results[0].x));
         const Marker = MarkerCustom(category);
 

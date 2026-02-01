@@ -13,7 +13,13 @@ export async function getAddress({
       if (status === kakao.maps.services.Status.OK) {
         // 주소 정보 설정
 
-        resolve(result[0].address.region_1depth_name + " " + result[0].address.region_2depth_name);
+        resolve(
+          result[0].address.region_1depth_name +
+            " " +
+            result[0].address.region_2depth_name +
+            " " +
+            result[0].address.region_3depth_name
+        );
       } else {
         resolve("");
       }

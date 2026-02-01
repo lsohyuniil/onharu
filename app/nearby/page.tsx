@@ -15,11 +15,14 @@ import { StoreAddress } from "@/components/ui/card/StoreAddress";
 import { searchStores } from "@/components/feature/map/searchStore";
 import { Button } from "@/components/ui/Button";
 import { DevideBar } from "./component/DevideBar";
-import { LocationSearch } from "./component/LocationSearch";
+import { StoreSearch } from "./component/StoreSearch";
 import { DummyData } from "./data/DummyData";
 import { NearbyStore } from "./type/type";
 import { CardSkeleton } from "@/components/ui/card/CardSkeleton";
-import { LocationSearchSkeleton } from "./component/LocationSearchSkeleton";
+import { StoreSearchSkeleton } from "./component/StoreSearchSkeleton";
+import { Modal } from "@/components/ui/Modal";
+import useModal from "@/hooks/useModal";
+import { LocationSearch } from "./component/LocationSearch";
 import { cn } from "@/lib/utils";
 
 export default function Nearby() {
@@ -28,6 +31,7 @@ export default function Nearby() {
   const { inputValue, setInputValue, keyword, setKeyword, handleSearch, handleInputChange } =
     useSearch();
   const { category, setCategory, filterByCategory } = useCategoryFilter();
+  const { open, handleOpenModal, handleCloseModal } = useModal();
 
   const isReady = mylocation.lat !== 0;
 
@@ -79,14 +83,10 @@ export default function Nearby() {
       <h2 className="sr-only">내 주변 착한가게를 찾을 수 있습니다.</h2>
       <div className="flex h-[100vh]">
         <SideMenu isReady={isReady}>
-          <MyAddress mylocation={mylocation} />
-          {!isReady && <LocationSearchSkeleton />}
+          <MyAddress mylocation={mylocation} handleOpenModal={handleOpenModal} />
+          {!isReady && <StoreSearchSkeleton />}
           {isReady && (
-            <LocationSearch
-              value={inputValue}
-              onChange={handleInputChange}
-              onSearch={handleSearch}
-            />
+            <StoreSearch value={inputValue} onChange={handleInputChange} onSearch={handleSearch} />
           )}
 
           <DevideBar />
@@ -132,6 +132,15 @@ export default function Nearby() {
           <Map type="search" store={stores} handleMyLocation={handleMyLocation} />
         </div>
       </div>
+      {open && (
+        <Modal onClick={handleCloseModal}>
+          <LocationSearch
+            open={open}
+            handleCloseModal={handleCloseModal}
+            handleMyLocation={handleMyLocation}
+          />
+        </Modal>
+      )}
     </section>
   );
 }

@@ -1,36 +1,92 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
-import { RiSearch2Line } from "@remixicon/react";
+"use client";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import DaumPostcode from "react-daum-postcode";
+import { Button } from "@/components/ui/Button";
+import { getCoord } from "@/components/feature/map/getCoord";
+import { Toast } from "@/components/feature/toast/Toast";
 
 interface LocationSearchProps {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: () => void;
+  open: boolean;
+  handleCloseModal: () => void;
+  handleMyLocation: (lat: number, lng: number) => void;
 }
 
-export const LocationSearch = ({ value, onChange, onSearch }: LocationSearchProps) => {
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onSearch();
+export const LocationSearch = ({
+  open,
+  handleCloseModal,
+  handleMyLocation,
+}: LocationSearchProps) => {
+  const [coordopen, setCoordOpen] = useState(false);
+  const [address, setAddress] = useState("");
+  const coordinateRef = useRef("");
+
+  const handleComplete = (data: any) => {
+    setAddress(data.roadAddress || data.address);
+    setCoordOpen(false);
+    coordinateRef.current = data.roadAddress || data.address;
+  };
+
+  const handleFindLocation = async () => {
+    if (address === "") {
+      handleCloseModal();
+    } else {
+      const newCoord = await getCoord(address);
+      if (!newCoord) {
+        Toast("error", "위치 정보 반영에 실패했습니다.", "다시 한 번 시도해 주세요.");
+        return;
+      }
+      handleMyLocation(newCoord.lat, newCoord.lng);
+      handleCloseModal();
     }
   };
 
   return (
-    <div className="my-7.5 px-7">
-      <form
-        action=""
-        className="flex h-12.5 w-full items-center rounded-sm border border-gray-300 bg-white px-4 focus-within:outline-2"
-      >
+    <>
+      <p className="text-md text-center font-bold md:text-2xl">
+        위치정보 <br />
+        직접 검색해볼까요?
+      </p>
+      <div className="relative">
+        <div className="absolute -top-12 left-0 h-22.5 w-22.5 -rotate-6">
+          <Image
+            src={"/image/character/squirrel-wink.png"}
+            fill
+            alt=""
+            style={{ objectFit: "cover" }}
+          />
+        </div>
         <input
-          type="text"
-          value={value || ""}
-          onChange={onChange}
-          onKeyDown={handleKeyDown}
-          className="flex-1 focus:outline-none"
+          readOnly
+          value={address}
+          placeholder="주소를 입력해주세요."
+          className="mt-6 h-12.5 w-full rounded-md border border-gray-300 px-2.5"
+          onFocus={() => setCoordOpen(true)}
         />
-        <button onClick={onSearch} type="button">
-          <RiSearch2Line size={24} />
-        </button>
-      </form>
-    </div>
+      </div>
+      {coordopen && (
+        <>
+          <div className="mt-4">
+            <DaumPostcode
+              onComplete={handleComplete}
+              autoClose
+              style={{ width: "100%", height: "450px" }}
+            />
+          </div>
+        </>
+      )}
+      {!coordopen && address && (
+        <>
+          <p className="mt-8 text-center text-sm font-semibold md:text-base">
+            선택한 주소 : {address}
+          </p>
+        </>
+      )}
+      <div className="mt-14.5">
+        <Button varient="default" fontSize="md" width="lg" height="lg" onClick={handleFindLocation}>
+          위치찾기
+        </Button>
+      </div>
+    </>
   );
 };
