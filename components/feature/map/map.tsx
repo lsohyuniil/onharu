@@ -31,6 +31,7 @@ export const Map = (props: MapProps) => {
   const locationRef = useRef<kakao.maps.Map | null>(null);
   const markersRef = useRef<kakao.maps.Marker[]>([]);
   const overLayRef = useRef<kakao.maps.CustomOverlay[]>([]);
+  const activeOverlayRef = useRef<kakao.maps.CustomOverlay | null>(null);
   const [mapReady, setMapReady] = useState<boolean>(false);
   const stores = type === "search" ? props.store : null;
   const mylocation = type === "search" ? props.mylocation : null;
@@ -48,6 +49,13 @@ export const Map = (props: MapProps) => {
 
     mapload();
 
+    (window as any).handleOverlayClose = () => {
+      if (activeOverlayRef.current) {
+        activeOverlayRef.current.setMap(null);
+        activeOverlayRef.current = null;
+      }
+    };
+
     return () => {
       // //search 상태 초기화
       // useLocationStore.getState().setSearchState(false)
@@ -61,7 +69,7 @@ export const Map = (props: MapProps) => {
   useEffect(() => {
     if (!mylocation || !locationRef.current) return;
     moveToCurrentLocation(locationRef.current, mylocation.lat, mylocation.lng); //map center 순서보장을 위해
-    NearbyStoreMarker(locationRef.current, stores, markersRef, overLayRef);
+    NearbyStoreMarker(locationRef.current, stores, markersRef, overLayRef, activeOverlayRef);
     setMapReady(true);
   }, [mylocation]);
 
@@ -70,7 +78,7 @@ export const Map = (props: MapProps) => {
     if (!locationRef.current) return;
     if (!props.store?.length) return;
 
-    NearbyStoreMarker(locationRef.current, stores, markersRef, overLayRef);
+    NearbyStoreMarker(locationRef.current, stores, markersRef, overLayRef, activeOverlayRef);
   }, [type, stores]);
 
   return (

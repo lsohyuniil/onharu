@@ -6,7 +6,8 @@ export function NearbyStoreMarker(
   map: kakao.maps.Map,
   stores: NearbyStore[] | null,
   markersRef: React.MutableRefObject<kakao.maps.Marker[]>,
-  overLayRef: React.MutableRefObject<kakao.maps.CustomOverlay[]>
+  overLayRef: React.MutableRefObject<kakao.maps.CustomOverlay[]>,
+  activeOverlayRef: React.MutableRefObject<kakao.maps.CustomOverlay | null>
 ) {
   if (!stores) return;
 
@@ -22,11 +23,10 @@ export function NearbyStoreMarker(
     const content = `
       <div class="customoverlay">
         <div>
-          <p>${store.name}</p>
-          <div class="btn_wrap">
-          <button class="info_btn">정보 보기</button>
-          <button class="close_btn">닫기</button>
-          </div>
+          <p class="store_name">${store.name}</p>
+          <p class="sharing">${store.hasSharing ? "나눔중" : "나눔 준비중"}</p>
+            <button class="close_btn" onclick="handleOverlayClose()">
+            </button>
           <div class="arrow"></div>
         </div>
       </div>
@@ -48,6 +48,7 @@ export function NearbyStoreMarker(
     kakao.maps.event.addListener(marker, "click", () => {
       overLayRef.current.forEach(overlay => overlay.setMap(null));
       customOverlay.setMap(map);
+      activeOverlayRef.current = customOverlay;
     });
 
     markersRef.current.push(marker);
