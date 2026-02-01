@@ -21,6 +21,7 @@ interface SearchMapProps extends BaseMapProps {
   type: "search";
   store: NearbyStore[];
   mylocation: { lat: number; lng: number };
+  handleActiveCard: (id: string) => void;
 }
 
 type MapProps = DetailMapProps | SearchMapProps;
@@ -67,19 +68,31 @@ export const Map = (props: MapProps) => {
   }, []);
 
   useEffect(() => {
-    if (!mylocation || !locationRef.current) return;
+    if (props.type !== "search" || !mylocation || !locationRef.current) return;
     moveToCurrentLocation(locationRef.current, mylocation.lat, mylocation.lng); //map center 순서보장을 위해
-    NearbyStoreMarker(locationRef.current, stores, markersRef, overLayRef, activeOverlayRef);
+    NearbyStoreMarker(
+      locationRef.current,
+      stores,
+      markersRef,
+      overLayRef,
+      activeOverlayRef,
+      props.handleActiveCard
+    );
     setMapReady(true);
   }, [mylocation]);
 
   useEffect(() => {
-    if (type !== "search") return;
-    if (!locationRef.current) return;
-    if (!props.store?.length) return;
+    if (props.type !== "search" || !locationRef.current || !props.store.length) return;
 
-    NearbyStoreMarker(locationRef.current, stores, markersRef, overLayRef, activeOverlayRef);
-  }, [type, stores]);
+    NearbyStoreMarker(
+      locationRef.current,
+      stores,
+      markersRef,
+      overLayRef,
+      activeOverlayRef,
+      props.handleActiveCard
+    );
+  }, [stores]);
 
   return (
     <>

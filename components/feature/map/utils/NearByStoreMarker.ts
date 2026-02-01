@@ -7,7 +7,8 @@ export function NearbyStoreMarker(
   stores: NearbyStore[] | null,
   markersRef: React.MutableRefObject<kakao.maps.Marker[]>,
   overLayRef: React.MutableRefObject<kakao.maps.CustomOverlay[]>,
-  activeOverlayRef: React.MutableRefObject<kakao.maps.CustomOverlay | null>
+  activeOverlayRef: React.MutableRefObject<kakao.maps.CustomOverlay | null>,
+  handleActiveCard: (id: string) => void
 ) {
   if (!stores) return;
 
@@ -49,6 +50,7 @@ export function NearbyStoreMarker(
       overLayRef.current.forEach(overlay => overlay.setMap(null));
       customOverlay.setMap(map);
       activeOverlayRef.current = customOverlay;
+      handleActiveCard(store.id);
     });
 
     markersRef.current.push(marker);

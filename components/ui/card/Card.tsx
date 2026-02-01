@@ -1,18 +1,31 @@
 import Link from "next/link";
 import { Like } from "../../feature/StoreLike";
+import { cn } from "@/lib/utils";
 
-interface CardProps {
+interface DefaultCard {
   storeId: string;
   storelink: string;
   storeThumnail: React.ReactNode;
   storename: string;
   storeIntroduce: string;
-  category?: React.ReactNode;
-  operating?: React.ReactNode;
-  storeAddress?: React.ReactNode;
-  hashtags?: React.ReactNode;
-  reservation?: React.ReactNode;
 }
+
+interface CharityCard extends DefaultCard {
+  type: "charity";
+  category: React.ReactNode;
+  hashtags: React.ReactNode;
+}
+
+interface NearbyCard extends DefaultCard {
+  type: "nearby";
+  operating: React.ReactNode;
+  storeAddress: React.ReactNode;
+  reservation: React.ReactNode;
+  activeId: string;
+}
+
+type CardProps = CharityCard | NearbyCard;
+
 /**
  * props에 대한 설명입니다.
  * @param storelink - 상세페이지 이동 url (공통)
@@ -38,27 +51,28 @@ interface CardProps {
     />
 */
 
-export const Card = ({
-  storeId,
-  storelink,
-  storeThumnail,
-  storename,
-  storeIntroduce,
-  category,
-  operating,
-  storeAddress,
-  hashtags,
-  reservation,
-}: CardProps) => {
+export const Card = (props: CardProps) => {
+  const activeId = props.type === "nearby" ? props.activeId : "";
+  const operating = props.type === "nearby" ? props.operating : null;
+  const storeAddress = props.type === "nearby" ? props.storeAddress : null;
+  const reservation = props.type === "nearby" ? props.reservation : null;
+  const category = props.type === "charity" ? props.category : null;
+  const hashtags = props.type === "charity" ? props.hashtags : null;
+
   return (
     <Link
-      href={storelink}
-      id={storeId}
-      className="inline-block h-full duration-300 ease-in-out hover:-translate-y-1.5"
+      href={props.storelink}
+      id={props.storeId}
+      className={"inline-block h-full duration-300 ease-in-out hover:-translate-y-1.5"}
     >
-      <div className="h-full overflow-hidden rounded-md border border-gray-300">
+      <div
+        className={cn(
+          "h-full overflow-hidden rounded-md border border-gray-300",
+          activeId === props.storeId && "outline-main-400 outline outline-2"
+        )}
+      >
         <div className="relative h-[110px] md:h-[183px]">
-          <div className="h-full w-full">{storeThumnail}</div>
+          <div className="h-full w-full">{props.storeThumnail}</div>
           {category}
         </div>
         <div className="relative bg-white p-2.5 md:p-4">
@@ -66,12 +80,12 @@ export const Card = ({
             <Like isLiked={false} />
           </div>
           <p className="md:text-md flex items-center gap-2 pr-6 text-base font-bold">
-            <span className="line-clamp-1">{storename}</span>
+            <span className="line-clamp-1">{props.storename}</span>
             {operating}
           </p>
           {storeAddress}
           <p className="text-text mt-2 line-clamp-2 text-sm leading-4.75 md:text-base">
-            {storeIntroduce}
+            {props.storeIntroduce}
           </p>
           {(hashtags || reservation) && (
             <div className="mt-3.5 flex items-center gap-1 md:mt-7.5">

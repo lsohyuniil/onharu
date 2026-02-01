@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import useModal from "@/hooks/useModal";
 import { cn } from "@/lib/utils";
+import { useActiveCard } from "@/components/feature/search/useActiveCard";
 
 export default function Nearby() {
   const [allStores, setAllStores] = useState<NearbyStore[]>([]);
@@ -36,6 +37,7 @@ export default function Nearby() {
   const { inputValue, setInputValue, keyword, setKeyword, handleSearch, handleInputChange } =
     useSearch();
   const { category, setCategory, filterByCategory } = useCategoryFilter();
+  const { activeId, setActiveId, handleActiveCard } = useActiveCard();
   const { open, handleOpenModal, handleCloseModal } = useModal();
 
   const isReady = mylocation.lat !== 0;
@@ -98,7 +100,7 @@ export default function Nearby() {
   return (
     <section>
       <h2 className="sr-only">내 주변 착한가게를 찾을 수 있습니다.</h2>
-      <div className="flex h-[100vh]">
+      <div className="flex h-[calc(100vh-80px)]">
         <SideMenu isReady={isReady}>
           <MyAddress mylocation={mylocation} handleOpenModal={handleOpenModal} />
           {!isReady && <StoreSearchSkeleton />}
@@ -113,6 +115,7 @@ export default function Nearby() {
             {isReady &&
               stores.map(store => (
                 <Card
+                  type="nearby"
                   key={store.id}
                   storeId={store.id}
                   storelink="/"
@@ -142,6 +145,7 @@ export default function Nearby() {
                       {store.hasSharing ? "나눔 예약하기" : "나눔 준비중"}
                     </Button>
                   }
+                  activeId={activeId}
                 />
               ))}
           </div>
@@ -154,7 +158,12 @@ export default function Nearby() {
           </div>
         </SideMenu>
         <div className="relative flex-1">
-          <Map type="search" store={stores} mylocation={mylocation} />
+          <Map
+            type="search"
+            store={stores}
+            mylocation={mylocation}
+            handleActiveCard={handleActiveCard}
+          />
         </div>
       </div>
       {open && (

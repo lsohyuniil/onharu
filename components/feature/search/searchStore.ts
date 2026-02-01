@@ -1,4 +1,3 @@
-import { MarkerCustom } from "./utils/markerCustom";
 import { NearbyStore } from "@/app/nearby/type/type";
 
 /**

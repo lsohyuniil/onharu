@@ -14,7 +14,7 @@ export const SideMenu = ({
   return (
     <article
       className={cn(
-        "absolute top-20 left-0 z-51 h-[100vh] w-full max-w-[435px] bg-white duration-350",
+        "absolute top-20 left-0 z-51 h-[calc(100vh-80px)] w-full max-w-[435px] bg-white duration-350",
         !open && "-translate-x-full"
       )}
     >
