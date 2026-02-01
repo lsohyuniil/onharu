@@ -21,7 +21,7 @@ interface DetailMapProps extends BaseMapProps {
 interface SearchMapProps extends BaseMapProps {
   type: "search";
   store: NearbyStore[];
-  handleMyLocation: (lat: number, lng: number) => void;
+  mylocation: { lat: number; lng: number };
 }
 
 type MapProps = DetailMapProps | SearchMapProps;
@@ -33,6 +33,7 @@ export const Map = (props: MapProps) => {
   const markersRef = useRef<kakao.maps.Marker[]>([]);
   const [mapReady, setMapReady] = useState<boolean>(false);
   const stores = type === "search" ? props.store : null;
+  const mylocation = type === "search" ? props.mylocation : null;
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -41,19 +42,8 @@ export const Map = (props: MapProps) => {
       if (!mapRef.current) return;
       const map = await InitMap(mapRef.current);
       locationRef.current = map;
-
-      if (type === "detail") {
-        if (!address || !category) return;
-        await getStorePosition(map, address, category);
-      } else if (type === "search") {
-        const pos = await getCurrentPosition();
-        const { latitude, longitude } = pos.coords;
-        moveToCurrentLocation(map, latitude, longitude); //map center 순서보장을 위해
-        props.handleMyLocation(latitude, longitude);
-
-        NearbyStoreMarker(map, props.store, markersRef);
-        setMapReady(true);
-      }
+      if (!address || !category) return;
+      await getStorePosition(map, address, category);
     };
 
     mapload();
@@ -67,6 +57,13 @@ export const Map = (props: MapProps) => {
       // useTransformStore.getState().setTransform(53)
     };
   }, []);
+
+  useEffect(() => {
+    if (!mylocation || !locationRef.current) return;
+    moveToCurrentLocation(locationRef.current, mylocation.lat, mylocation.lng); //map center 순서보장을 위해
+    NearbyStoreMarker(locationRef.current, stores, markersRef);
+    setMapReady(true);
+  }, [mylocation]);
 
   useEffect(() => {
     if (type !== "search") return;

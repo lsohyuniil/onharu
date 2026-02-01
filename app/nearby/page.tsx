@@ -24,6 +24,7 @@ import { Modal } from "@/components/ui/Modal";
 import useModal from "@/hooks/useModal";
 import { LocationSearch } from "./component/LocationSearch";
 import { cn } from "@/lib/utils";
+import { getCurrentPosition } from "@/components/feature/map/getCurrentPositin";
 
 export default function Nearby() {
   const [allStores, setAllStores] = useState<NearbyStore[]>([]);
@@ -34,6 +35,14 @@ export default function Nearby() {
   const { open, handleOpenModal, handleCloseModal } = useModal();
 
   const isReady = mylocation.lat !== 0;
+
+  useEffect(() => {
+    (async () => {
+      const pos = await getCurrentPosition();
+      const { latitude, longitude } = pos.coords;
+      handleMyLocation(latitude, longitude);
+    })();
+  }, []);
 
   useEffect(() => {
     if (mylocation.lat === 0) return;
@@ -129,7 +138,7 @@ export default function Nearby() {
           </div>
         </SideMenu>
         <div className="relative flex-1">
-          <Map type="search" store={stores} handleMyLocation={handleMyLocation} />
+          <Map type="search" store={stores} mylocation={mylocation} />
         </div>
       </div>
       {open && (
