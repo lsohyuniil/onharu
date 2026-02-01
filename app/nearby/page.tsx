@@ -16,6 +16,7 @@ import { DevideBar } from "./component/DevideBar";
 import { LocationSearch } from "./component/LocationSearch";
 import { DummyData } from "./data/DummyData";
 import { NearbyStore } from "./type/type";
+import { CardSkeleton } from "@/components/ui/card/CardSkeleton";
 
 export default function Nearby() {
   const [allStores, setAllStores] = useState<NearbyStore[]>([]);
@@ -76,21 +77,25 @@ export default function Nearby() {
           <LocationSearch value={inputValue} onChange={handleInputChange} onSearch={handleSearch} />
           <DevideBar />
           <div className="scrollbar-thin grid flex-1 grid-cols-1 gap-8 overflow-y-scroll p-7.5">
-            {stores.map(store => (
-              <Card
-                key={store.id}
-                storelink="/"
-                storeSrc=""
-                storename={store.name}
-                storeAddress={<StoreAddress address={store.address} />}
-                storeIntroduce={store.description}
-                reservation={
-                  <Button varient="default" width="lg" height="md" fontSize="md">
-                    예약하기
-                  </Button>
-                }
-              />
-            ))}
+            {mylocation.lat === 0 &&
+              Array.from({ length: 3 }).map((_, idx) => <CardSkeleton key={idx} />)}
+
+            {mylocation.lat !== 0 &&
+              stores.map(store => (
+                <Card
+                  key={store.id}
+                  storelink="/"
+                  storeSrc=""
+                  storename={store.name}
+                  storeAddress={<StoreAddress address={store.address} />}
+                  storeIntroduce={store.description}
+                  reservation={
+                    <Button varient="default" width="lg" height="md" fontSize="md">
+                      예약하기
+                    </Button>
+                  }
+                />
+              ))}
           </div>
           <div className="absolute top-5 -right-[155%] z-50">
             <Navigation
