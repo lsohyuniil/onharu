@@ -49,19 +49,23 @@
     @apply max-w-wrapper px-wrapper mx-auto;
   }
   .customoverlay {
-    @apply bg-main-500 absolute -top-28 -left-5 min-w-28 rounded-md px-2 py-1.5 text-white;
+    @apply bg-main-500 absolute -top-29 -left-5 max-w-35 min-w-28 rounded-md px-2 py-2 text-white shadow-xl;
   }
   .customoverlay > div {
     @apply relative;
   }
   .customoverlay .arrow {
-    @apply border-t-main-500 absolute -bottom-3 h-0 w-0 border-t-9 border-r-8 border-l-8 border-r-transparent border-l-transparent;
+    @apply border-t-main-500 absolute -bottom-4 h-0 w-0 border-t-9 border-r-8 border-l-8 border-r-transparent border-l-transparent;
   }
   .customoverlay p {
     @apply text-sm font-bold;
   }
-  .customoverlay button {
-    @apply text-main-hover cursor-pointer rounded-xs bg-gray-100 px-1 text-xs;
+  .customoverlay .btn_wrap {
+    @apply mt-1 flex w-full gap-1;
+  }
+  .customoverlay .info_btn,
+  .customoverlay .close_btn {
+    @apply text-main-hover flex-1 cursor-pointer rounded-xs bg-gray-100 px-0.5 text-xs;
   }
 }
 

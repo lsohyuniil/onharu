@@ -1,5 +1,6 @@
 import { NearbyStore } from "@/app/nearby/type/type";
 import { MarkerCustom } from "./markerCustom";
+import { RiCloseLine } from "@remixicon/react";
 
 export function NearbyStoreMarker(
   map: kakao.maps.Map,
@@ -20,11 +21,14 @@ export function NearbyStoreMarker(
     const CustomMarkers = MarkerCustom(store.category);
     const content = `
       <div class="customoverlay">
-      <div>
-      <p>${store.name}</p>
-      <button>정보 보기</button>
-      <div class="arrow"></div>
-      </div>
+        <div>
+          <p>${store.name}</p>
+          <div class="btn_wrap">
+          <button class="info_btn">정보 보기</button>
+          <button class="close_btn">닫기</button>
+          </div>
+          <div class="arrow"></div>
+        </div>
       </div>
     `;
 
