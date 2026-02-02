@@ -29,8 +29,8 @@ export const ownerMenu = [
     icon: RiHandHeartLine,
     items: [
       { label: "가게 등록", href: "/mypage/store/create" },
-      { label: "내가 받은 감사카드", href: "/mypage/store/thanks" },
-      { label: "1:1 문의하기", href: "/mypage/store/inquiry" },
+      { label: "내가 받은 감사카드", href: "/mypage/reviews" },
+      // { label: "1:1 문의하기", href: "/mypage/inquiry" },
     ],
   },
   {
@@ -63,9 +63,9 @@ export const childMenu = [
     title: "나의 활동",
     icon: RiHandHeartLine,
     items: [
-      { label: "감사 리뷰", href: "/mypage/activity/reviews" },
-      { label: "관심 목록", href: "/mypage/activity/interests" },
-      { label: "1:1 문의하기", href: "/mypage/activity/inquiry" },
+      { label: "감사 리뷰", href: "/mypage/reviews" },
+      { label: "관심 목록", href: "/mypage/interests" },
+      // { label: "1:1 문의하기", href: "/mypage/inquiry" },
     ],
   },
   {

@@ -1,4 +1,4 @@
-import { PageSection } from "../../components/PageSection";
+import { PageSection } from "../components/PageSection";
 import InterestsCard from "./components/InterestsCard";
 import { mockStores } from "./data/mockData";
 
