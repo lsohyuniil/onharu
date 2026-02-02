@@ -2,11 +2,13 @@
 import { useRef, useEffect, useState } from "react";
 import { MapLoading } from "./MapLoading";
 import { InitMap } from "./initMap";
+import { MapZoom } from "./MapZoom";
 import { moveToCurrentLocation } from "./utils/moveCurrentLocation";
 import { getStorePosition } from "./utils/getStorePosition";
+import { NearbyStoreMarker } from "./utils/NearByStoreMarker";
 import { CategoryName } from "../category/data";
 import { NearbyStore } from "@/app/nearby/type/type";
-import { NearbyStoreMarker } from "./utils/NearByStoreMarker";
+import { useZoomControl } from "./hooks/useZoomControl";
 
 interface BaseMapProps {
   address?: string | null;
@@ -35,6 +37,7 @@ export const Map = (props: MapProps) => {
   const overLayRef = useRef<kakao.maps.CustomOverlay[]>([]);
   const activeOverlayRef = useRef<kakao.maps.CustomOverlay | null>(null);
   const [mapReady, setMapReady] = useState<boolean>(false);
+  const { handleZoomIn, handleZoomOut } = useZoomControl(locationRef);
   const stores = type === "search" ? props.store : null;
   const mylocation = type === "search" ? props.mylocation : null;
 
@@ -98,7 +101,12 @@ export const Map = (props: MapProps) => {
   return (
     <>
       <div className="h-full w-full" ref={mapRef} />
-      {type === "search" && <MapLoading ready={mapReady} />}
+      {type === "search" && (
+        <>
+          <MapLoading ready={mapReady} />
+          <MapZoom handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />
+        </>
+      )}
     </>
   );
 };
