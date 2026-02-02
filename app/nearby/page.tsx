@@ -12,6 +12,7 @@ import {
 import { DummyData } from "./data/DummyData";
 import { NearbyStore } from "./type/type";
 
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Map } from "@/components/feature/map/map";
 import { Navigation } from "@/components/feature/category/Navigation";
 import { useMyLocation } from "@/components/feature/map/hooks/useMyLocation";
@@ -42,6 +43,9 @@ export default function Nearby() {
   const { open, handleOpenModal, handleCloseModal } = useModal();
 
   const isReady = mylocation.lat !== 0;
+
+  const isCategoryQuery = useMediaQuery("(min-width: 1150px)");
+  const isDesktop = useMediaQuery("(min-width: 500px)");
 
   useEffect(() => {
     (async () => {
@@ -161,7 +165,13 @@ export default function Nearby() {
 
             {isReady && stores.length === 0 && <SearchNoResult />}
           </div>
-          <div className={cn("absolute top-5 -right-[155%] z-50", !isReady && "-z-10 opacity-0")}>
+          <div
+            className={cn(
+              "absolute top-5 left-[455px] z-50 min-w-[643px]",
+              !isReady && "-z-10 opacity-0",
+              !isCategoryQuery && "left-[414px] min-w-100"
+            )}
+          >
             <Navigation
               value={category}
               onChange={setCategory}
