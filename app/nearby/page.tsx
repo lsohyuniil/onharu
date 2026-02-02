@@ -101,7 +101,7 @@ export default function Nearby() {
   return (
     <section>
       <h2 className="sr-only">내 주변 착한가게를 찾을 수 있습니다.</h2>
-      <div className="flex h-[calc(100vh-80px)]">
+      <div className="flex h-[calc(100vh-205px)]">
         <SideMenu isReady={isReady}>
           <MyAddress mylocation={mylocation} handleOpenModal={handleOpenModal} />
           {!isReady && <StoreSearchSkeleton />}
