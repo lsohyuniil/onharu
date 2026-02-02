@@ -6,9 +6,11 @@ import { RefObject } from "react";
 export const MyLocation = ({
   originLocation,
   handleMyLocation,
+  mapReady,
 }: {
   originLocation: RefObject<{ lat: number; lng: number }> | null;
   handleMyLocation: ((lat: number, lng: number) => void) | null;
+  mapReady: boolean;
 }) => {
   const BaseClassess =
     "flex h-10 w-10 items-center-safe duration-200 border border-gray-300 justify-center rounded-full bg-white shadow-xl";
@@ -24,7 +26,7 @@ export const MyLocation = ({
   return (
     <div className="fixed top-80 right-7 z-60">
       <button
-        className={cn(BaseClassess, FocusClassess, HoverClassess)}
+        className={cn(BaseClassess, FocusClassess, HoverClassess, !mapReady && "-z-10 opacity-0")}
         onClick={handleMoveMyLocation}
         aria-label="현재 내 위치로 이동합니다"
       >

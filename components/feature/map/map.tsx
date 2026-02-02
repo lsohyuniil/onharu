@@ -109,8 +109,12 @@ export const Map = (props: MapProps) => {
       {type === "search" && (
         <>
           <MapLoading ready={mapReady} />
-          <MapZoom handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} />
-          <MyLocation handleMyLocation={handleMyLocation} originLocation={originLocation} />
+          <MapZoom handleZoomIn={handleZoomIn} handleZoomOut={handleZoomOut} mapReady={mapReady} />
+          <MyLocation
+            handleMyLocation={handleMyLocation}
+            originLocation={originLocation}
+            mapReady={mapReady}
+          />
         </>
       )}
     </>
