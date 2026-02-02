@@ -4,7 +4,7 @@ export async function getAddress({
   mylocation: { lat: number; lng: number };
 }): Promise<string> {
   return new Promise(resolve => {
-    if (!window.kakao || !window.kakao.maps) {
+    if (!window.kakao || !window.kakao.maps || !window.kakao.maps.services) {
       resolve("");
       return;
     }

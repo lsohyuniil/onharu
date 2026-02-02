@@ -76,6 +76,10 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        bottomSheet: {
+          from: { maxHeight: "var(--startH)" },
+          to: { maxHeight: "var(--endH)" },
+        },
       },
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],

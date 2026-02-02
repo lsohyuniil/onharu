@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 
 export const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const media = window.matchMedia(query);
     setMatches(media.matches);
 
@@ -15,5 +17,5 @@ export const useMediaQuery = (query: string) => {
     return () => media.removeEventListener("change", listener);
   }, [query]);
 
-  return matches;
+  return mounted ? matches : null;
 };

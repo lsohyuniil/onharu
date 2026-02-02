@@ -28,6 +28,8 @@ import { StoreAddress } from "@/components/ui/card/StoreAddress";
 import { searchStores } from "@/components/feature/search/searchStore";
 import { Button } from "@/components/ui/Button";
 
+import { BottomSheet } from "@/components/feature/bottomsheet/Bottomsheet";
+
 import { Modal } from "@/components/ui/Modal";
 import useModal from "@/hooks/useModal";
 import { cn } from "@/lib/utils";
@@ -44,8 +46,9 @@ export default function Nearby() {
 
   const isReady = mylocation.lat !== 0;
 
-  const isCategoryQuery = useMediaQuery("(min-width: 1150px)");
-  const isDesktop = useMediaQuery("(min-width: 500px)");
+  const isCategoryQuery = useMediaQuery("(max-width: 1150px)");
+  const isSidemenuQuery = useMediaQuery("(max-width:820px)");
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   useEffect(() => {
     (async () => {
@@ -107,78 +110,85 @@ export default function Nearby() {
     <section>
       <h2 className="sr-only">내 주변 착한가게를 찾을 수 있습니다.</h2>
       <div className="flex h-[calc(100vh-205px)]">
-        <SideMenu isReady={isReady}>
-          <MyAddress mylocation={mylocation} handleOpenModal={handleOpenModal} />
-          {!isReady && <StoreSearchSkeleton />}
-          {isReady && (
-            <StoreSearch value={inputValue} onChange={handleInputChange} onSearch={handleSearch} />
-          )}
-
-          <DevideBar />
-          <div className="scrollbar-thin grid flex-1 grid-cols-1 gap-8 overflow-y-scroll p-7.5">
-            {!isReady && Array.from({ length: 3 }).map((_, idx) => <CardSkeleton key={idx} />)}
-
-            {isReady &&
-              stores.length > 0 &&
-              stores.map(store => (
-                <div
-                  key={store.id}
-                  className="w-full"
-                  ref={el => {
-                    cardRefs.current[store.id] = el;
-                  }}
-                >
-                  <Card
-                    type="nearby"
-                    storeId={store.id}
-                    storelink="/"
-                    storeThumnail={
-                      <Thumbnail
-                        src={""}
-                        openTime={store.openTime}
-                        closeTime={store.closeTime}
-                        hasSharing={store.hasSharing}
-                      />
-                    }
-                    storename={store.name}
-                    storeAddress={<StoreAddress address={store.address} />}
-                    storeIntroduce={store.description}
-                    operating={
-                      <OperatingBedge openTime={store.openTime} closeTime={store.closeTime} />
-                    }
-                    reservation={
-                      <Button
-                        varient="default"
-                        width="lg"
-                        height="md"
-                        fontSize="md"
-                        disabled={!store.hasSharing}
-                        onClick={handleReservation}
-                      >
-                        {store.hasSharing ? "나눔 예약하기" : "나눔 준비중"}
-                      </Button>
-                    }
-                    activeId={activeId}
-                  />
-                </div>
-              ))}
-
-            {isReady && stores.length === 0 && <SearchNoResult />}
-          </div>
-          <div
-            className={cn(
-              "absolute top-5 left-[455px] z-50 min-w-[643px]",
-              !isReady && "-z-10 opacity-0",
-              !isCategoryQuery && "left-[414px] min-w-100"
+        {isMobile === false && (
+          <SideMenu isReady={isReady}>
+            <MyAddress mylocation={mylocation} handleOpenModal={handleOpenModal} />
+            {!isReady && <StoreSearchSkeleton />}
+            {isReady && (
+              <StoreSearch
+                value={inputValue}
+                onChange={handleInputChange}
+                onSearch={handleSearch}
+              />
             )}
-          >
-            <Navigation
-              value={category}
-              onChange={setCategory}
-              InitializePage={handleCategoryChange}
-            />
-          </div>
-        </SideMenu>
+
+            <DevideBar />
+            <div className="scrollbar-thin grid flex-1 grid-cols-1 gap-8 overflow-y-scroll p-7.5">
+              {!isReady && Array.from({ length: 3 }).map((_, idx) => <CardSkeleton key={idx} />)}
+
+              {isReady &&
+                stores.length > 0 &&
+                stores.map(store => (
+                  <div
+                    key={store.id}
+                    className="w-full"
+                    ref={el => {
+                      cardRefs.current[store.id] = el;
+                    }}
+                  >
+                    <Card
+                      type="nearby"
+                      storeId={store.id}
+                      storelink="/"
+                      storeThumnail={
+                        <Thumbnail
+                          src={""}
+                          openTime={store.openTime}
+                          closeTime={store.closeTime}
+                          hasSharing={store.hasSharing}
+                        />
+                      }
+                      storename={store.name}
+                      storeAddress={<StoreAddress address={store.address} />}
+                      storeIntroduce={store.description}
+                      operating={
+                        <OperatingBedge openTime={store.openTime} closeTime={store.closeTime} />
+                      }
+                      reservation={
+                        <Button
+                          varient="default"
+                          width="lg"
+                          height="md"
+                          fontSize="md"
+                          disabled={!store.hasSharing}
+                          onClick={handleReservation}
+                        >
+                          {store.hasSharing ? "나눔 예약하기" : "나눔 준비중"}
+                        </Button>
+                      }
+                      activeId={activeId}
+                    />
+                  </div>
+                ))}
+
+              {isReady && stores.length === 0 && <SearchNoResult />}
+            </div>
+            <div
+              className={cn(
+                "absolute top-5 left-[455px] z-50 min-w-[643px]",
+                !isReady && "-z-10 opacity-0",
+                isCategoryQuery && "left-[414px] min-w-100",
+                isSidemenuQuery && "left-[350px] min-w-80"
+              )}
+            >
+              <Navigation
+                value={category}
+                onChange={setCategory}
+                InitializePage={handleCategoryChange}
+              />
+            </div>
+          </SideMenu>
+        )}
         <div className="relative flex-1">
           <Map
             type="search"
@@ -189,6 +199,78 @@ export default function Nearby() {
             handleActiveCard={handleActiveCard}
           />
         </div>
+
+        {isMobile && (
+          <>
+            {isReady && (
+              <>
+                <div className="fixed top-16 left-[50%] z-50 w-full -translate-x-[50%]">
+                  <StoreSearch
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onSearch={handleSearch}
+                  />
+                </div>
+                <div className="fixed top-38 z-50 w-full">
+                  <Navigation
+                    value={category}
+                    onChange={setCategory}
+                    InitializePage={handleCategoryChange}
+                  />
+                </div>
+              </>
+            )}
+
+            <BottomSheet open={isReady} onClose={() => {}}>
+              <MyAddress mylocation={mylocation} handleOpenModal={handleOpenModal} />
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {stores.length > 0 &&
+                  stores.map(store => (
+                    <div
+                      key={store.id}
+                      className="w-full"
+                      ref={el => {
+                        cardRefs.current[store.id] = el;
+                      }}
+                    >
+                      <Card
+                        type="nearby"
+                        storeId={store.id}
+                        storelink="/"
+                        storeThumnail={
+                          <Thumbnail
+                            src={""}
+                            openTime={store.openTime}
+                            closeTime={store.closeTime}
+                            hasSharing={store.hasSharing}
+                          />
+                        }
+                        storename={store.name}
+                        storeAddress={<StoreAddress address={store.address} />}
+                        storeIntroduce={store.description}
+                        operating={
+                          <OperatingBedge openTime={store.openTime} closeTime={store.closeTime} />
+                        }
+                        reservation={
+                          <Button
+                            varient="default"
+                            width="lg"
+                            height="md"
+                            fontSize="md"
+                            disabled={!store.hasSharing}
+                            onClick={handleReservation}
+                          >
+                            {store.hasSharing ? "나눔 예약하기" : "나눔 준비중"}
+                          </Button>
+                        }
+                        activeId={activeId}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </BottomSheet>
+          </>
+        )}
       </div>
       {open && (
         <Modal onClick={handleCloseModal}>

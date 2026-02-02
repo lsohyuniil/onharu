@@ -3,6 +3,7 @@ import { getAddress } from "@/components/feature/map/utils/getAddress";
 import { Button } from "@/components/ui/Button";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { cn } from "@/lib/utils";
 
 interface MyAddressProps {
   mylocation: { lat: number; lng: number };
@@ -11,6 +12,7 @@ interface MyAddressProps {
 
 export const MyAddress = ({ mylocation, handleOpenModal }: MyAddressProps) => {
   const [myaddress, setMyAddress] = useState("");
+  const BaseClasses = "px-0 pt-3 pb-4 md:px-7 md:pt-12.5 md:pb-0 bg-white";
 
   useEffect(() => {
     const loadAddress = async () => {
@@ -24,7 +26,7 @@ export const MyAddress = ({ mylocation, handleOpenModal }: MyAddressProps) => {
 
   if (myaddress == "") {
     return (
-      <div className="px-7 pt-12.5">
+      <div className={BaseClasses}>
         <Skeleton height={40} style={{ lineHeight: "1.5" }} />
       </div>
     );
@@ -32,7 +34,12 @@ export const MyAddress = ({ mylocation, handleOpenModal }: MyAddressProps) => {
   if (myaddress !== "") {
     return (
       <>
-        <div className="text-md flex items-center justify-between px-7 pt-12.5 font-bold md:text-xl">
+        <div
+          className={cn(
+            BaseClasses,
+            "text-md flex items-center justify-between font-bold md:text-xl"
+          )}
+        >
           {myaddress}
           <Button varient="default" fontSize="sm" width="xs" height="xs" onClick={handleOpenModal}>
             위치 변경

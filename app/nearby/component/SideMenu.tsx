@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RiArrowLeftSLine } from "@remixicon/react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 export const SideMenu = ({
@@ -10,12 +11,13 @@ export const SideMenu = ({
   children: React.ReactNode;
 }) => {
   const [open, setOpen] = useState(true);
-
+  const isSidemenuQuery = useMediaQuery("(max-width:820px)");
   return (
     <article
       className={cn(
         "absolute top-20 left-0 z-51 h-[calc(100vh-205px)] w-full max-w-[435px] bg-white duration-350",
-        !open && "-translate-x-full"
+        !open && "-translate-x-full",
+        isSidemenuQuery && "max-w-[330px]"
       )}
     >
       <div className="relative h-full w-full">
