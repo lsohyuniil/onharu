@@ -2,7 +2,7 @@ type Coord = { lat: number; lng: number } | null;
 
 export async function getCoord(address: string): Promise<Coord> {
   return new Promise(resolve => {
-    if (!address || !window.kakao?.maps) {
+    if (!window.kakao || !window.kakao.maps || !address) {
       resolve(null);
       return;
     }
