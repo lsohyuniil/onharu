@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import Select, { SelectOption } from "@/components/ui/Select";
+import Textarea from "@/components/ui/TextArea";
 
 interface StoreOption {
   id: number;
@@ -50,14 +51,14 @@ export default function ReviewWriteForm({ stores }: Props) {
       <div className="mb-10 flex flex-col gap-2">
         <div className="sm:text-md text-base">사장님께 쓰는 편지</div>
 
-        <textarea
+        <Textarea
+          className="w-full"
           value={content}
           onChange={e => setContent(e.target.value)}
           placeholder={`진심을 담은 편지로 감사 인사를 전달해보세요!\n실명은 공개되지 않으며, 닉네임으로 전달됩니다.`}
-          className="hover:border-main focus:border-main active:border-main mt-2 min-h-37.5 rounded-[10px] border bg-white p-4 text-sm whitespace-pre-line outline-none focus:border-2 sm:text-base"
           maxLength={500}
+          showCount
         />
-        <div className="text-text-secondary text-right text-xs">{content.length}/500</div>
       </div>
 
       <div className="flex justify-center">
