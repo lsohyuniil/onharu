@@ -4,7 +4,10 @@ export async function getAddress({
   mylocation,
 }: {
   mylocation: { lat: number; lng: number };
-}): Promise<string> {
+}): Promise<string | null> {
+  if (!mylocation || mylocation.lat === 0 || mylocation.lng === 0) {
+    return null;
+  }
   // SDK 로딩 보장
   await loadMap();
 
@@ -18,7 +21,7 @@ export async function getAddress({
           `${address.region_1depth_name} ${address.region_2depth_name} ${address.region_3depth_name}`
         );
       } else {
-        resolve("주소를 찾을 수 없습니다");
+        resolve(null);
       }
     });
   });
