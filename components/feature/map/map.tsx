@@ -69,6 +69,7 @@ export const Map = (props: MapProps) => {
 
   useEffect(() => {
     if (props.type !== "search" || !mylocation || !locationRef.current) return;
+    if (mylocation.lat === 0) return;
 
     moveToCurrentLocation(locationRef.current, CurrentOverlayRef, mylocation.lat, mylocation.lng);
     NearbyStoreMarker(

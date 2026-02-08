@@ -29,7 +29,6 @@ export default function Nearby() {
   const { open, handleOpenModal, handleCloseModal } = useModal();
 
   const isReady = mylocation.lat !== 0;
-  console.log(isReady);
 
   const isCategoryQuery = useMediaQuery("(max-width: 1150px)");
   const isSidemenuQuery = useMediaQuery("(max-width:820px)");
