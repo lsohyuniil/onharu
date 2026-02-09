@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export const MobileView = () => {
   return (
     <>
-      <div className="absolute inset-0 flex items-center justify-center px-8">
+      <div className="mobile:px-15 absolute inset-0 flex items-center justify-center px-10">
         <div className="relative">
           <motion.div
             initial={{ y: 0 }}
@@ -29,7 +29,12 @@ export const MobileView = () => {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <Image src={"/image/banner/mobile-letter.svg"} alt="" width={946} height={324} />
+            <Image
+              src={"/image/banner/mobile-letter.svg"}
+              alt="돌봄이 필요한 아이들을 위해 책한 가게를 한눈에 "
+              width={946}
+              height={324}
+            />
           </motion.div>
         </div>
       </div>
