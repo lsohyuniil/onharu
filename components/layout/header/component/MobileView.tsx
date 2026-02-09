@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { NavItems } from "../data";
@@ -14,7 +15,9 @@ export const MobileView = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <header className="sticky top-0 z-100 border-b border-b-gray-200 bg-white">
       <div className="wrapper relative">
-        <h1 className="bg-main-200 m-auto h-12.5 w-20">로고</h1>
+        <h1 className="relative m-auto h-12.5 w-20">
+          <Image src={"/image/icon/logo.svg"} alt="" fill style={{ objectFit: "contain" }} />
+        </h1>
         <button className="absolute top-3 right-3" onClick={() => setOpen(true)}>
           <RiMenu3Line />
         </button>

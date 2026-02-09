@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       maxWidth: {
-        wrapper: "1470px",
+        wrapper: "1200px",
       },
       padding: {
         wrapper: "15px",
