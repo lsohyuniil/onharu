@@ -60,6 +60,8 @@ export default function CharityStore() {
    * **/
   //const paginatedStores = paginate(stores, currentPage, 16);
 
+  //console.log(stores);
+
   return (
     <section className="mt-section-sm-top md:mt-section-lg-top mb-section-sm-bottom md:mb-section-lg-bottom">
       <h2 className="sr-only">나눔 가게 전체 보기</h2>
